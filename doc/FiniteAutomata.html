@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.23.0">
+    <meta name="project" content="finite_automata v0.1.0">
+
+    <title>FiniteAutomata — finite_automata v0.1.0</title>
+    <link rel="stylesheet" href="dist/elixir-9f91ebe876dc01d67920.css" />
+
+    <script src="dist/sidebar_items-fe2d65029f.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/app-60a0c9f10e9e52eae31f.js"></script>
+
+  </head>
+  <body data-type="modules">
+    <script>try { if(localStorage.getItem('night-mode') === 'true') document.body.className += ' night-mode'; } catch (e) { }</script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle">
+  <span class="icon-menu" title="Collapse/expand sidebar"></span>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <span class="icon-search" aria-hidden="true" title="Submit search"></span>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <span class="icon-cross" aria-hidden="true" title="Cancel search"></span>
+    </button>
+    <label class="search-label">
+      <input name="q" type="text" id="search-list" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectDetails">
+      <a href="api-reference.html" class="sidebar-projectName">
+finite_automata
+      </a>
+      <strong class="sidebar-projectVersion">
+        v0.1.0
+      </strong>
+    </div>
+
+  </div>
+
+  <ul class="sidebar-listNav">
+    <li><a id="extras-list" href="#full-list">Pages</a></li>
+
+      <li><a id="modules-list" href="#full-list">Modules</a></li>
+
+
+  </ul>
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+      <h1>
+FiniteAutomata <small class="app-vsn">(finite_automata v0.1.0)</small>
+
+      </h1>
+
+
+        <section id="moduledoc">
+<p>This module implements an algorithm to simulate deterministic and non-deterministic finite automata.</p>
+        </section>
+
+
+        <section id="summary" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#summary">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+            Summary
+          </h1>
+
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#compose_automata/5">compose_automata(input, alphabet, transition_function, initial_state, acceptance_states)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Validates the input for a given automata according to it's alphabet. If the input is valid, the input is deconstructed into a list of chars and passed to the next_state function, along with the initial state and the transition function. </p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#next_state/3">next_state(input_chars, current_state, transition_function)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Calculates the next state for the deconstructed input, following the rules of the transition function. </p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#validate_input/2">validate_input(input, alphabet)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Validates input according to automata's alphabet.</p></div>
+
+</div>
+
+  </div>
+
+        </section>
+
+
+        <section id="functions" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#functions">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Functions
+          </h1>
+          <div class="functions-list">
+<section class="detail" id="compose_automata/5">
+
+  <div class="detail-header">
+    <a href="#compose_automata/5" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">compose_automata(input, alphabet, transition_function, initial_state, acceptance_states)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Validates the input for a given automata according to it's alphabet. If the input is valid, the input is deconstructed into a list of chars and passed to the next_state function, along with the initial state and the transition function. </p><p>The next_state function will calculate the next state recursively, based on the transition function and the input given. If the automata gets trapped in a state without a valid transition, it will raise an error. If the input is completely consumed in the recursion, the function will return the final state(s). </p><p>After the next_state function call, the result will be evaluated. If the input wasn't accepted, the compose_automata will raise an error. If final states can be reached, they will be compared to the acceptance_states, and if there is an intersection, the function will return an :accepted atom. Otherwise, it will raise another error.</p><h2 id="compose_automata/5-examples" class="section-heading">
+  <a href="#compose_automata/5-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Examples
+</h2>
+<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">FiniteAutomata</span><span class="o">.</span><span class="n">compose_automata</span><span class="p" data-group-id="3453034504-1">(</span><span class="s">&quot;abcd&quot;</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3453034504-2">[</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p" data-group-id="3453034504-2">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3453034504-3">[</span><span class="p" data-group-id="3453034504-4">{</span><span class="ss">:q0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:q1</span><span class="p" data-group-id="3453034504-4">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3453034504-5">{</span><span class="ss">:q1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:q2</span><span class="p" data-group-id="3453034504-5">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3453034504-6">{</span><span class="ss">:q2</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:q1</span><span class="p" data-group-id="3453034504-6">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3453034504-7">{</span><span class="ss">:q1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:q3</span><span class="p" data-group-id="3453034504-7">}</span><span class="p" data-group-id="3453034504-3">]</span><span class="p">,</span><span class="w"> </span><span class="ss">:q0</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3453034504-8">[</span><span class="ss">:q3</span><span class="p" data-group-id="3453034504-8">]</span><span class="p" data-group-id="3453034504-1">)</span><span class="w">
+</span><span class="p" data-group-id="3453034504-9">{</span><span class="ss">:not_accepted</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Input not valid for automata&#39;s alphabet.&quot;</span><span class="p" data-group-id="3453034504-9">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">FiniteAutomata</span><span class="o">.</span><span class="n">compose_automata</span><span class="p" data-group-id="3453034504-10">(</span><span class="s">&quot;abc&quot;</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3453034504-11">[</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p" data-group-id="3453034504-11">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3453034504-12">[</span><span class="p" data-group-id="3453034504-13">{</span><span class="ss">:q0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:q1</span><span class="p" data-group-id="3453034504-13">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3453034504-14">{</span><span class="ss">:q1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:q2</span><span class="p" data-group-id="3453034504-14">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3453034504-15">{</span><span class="ss">:q2</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:q1</span><span class="p" data-group-id="3453034504-15">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3453034504-16">{</span><span class="ss">:q1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:q3</span><span class="p" data-group-id="3453034504-16">}</span><span class="p" data-group-id="3453034504-12">]</span><span class="p">,</span><span class="w"> </span><span class="ss">:q0</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3453034504-17">[</span><span class="ss">:q3</span><span class="p" data-group-id="3453034504-17">]</span><span class="p" data-group-id="3453034504-10">)</span><span class="w">
+</span><span class="p" data-group-id="3453034504-18">{</span><span class="ss">:not_accepted</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Automata is trapped in a non-acceptance state after consuming the input.&quot;</span><span class="p" data-group-id="3453034504-18">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">FiniteAutomata</span><span class="o">.</span><span class="n">compose_automata</span><span class="p" data-group-id="3453034504-19">(</span><span class="s">&quot;abc&quot;</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3453034504-20">[</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p" data-group-id="3453034504-20">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3453034504-21">[</span><span class="p" data-group-id="3453034504-22">{</span><span class="ss">:q0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:q1</span><span class="p" data-group-id="3453034504-22">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3453034504-23">{</span><span class="ss">:q1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:q2</span><span class="p" data-group-id="3453034504-23">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3453034504-24">{</span><span class="ss">:q2</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:q1</span><span class="p" data-group-id="3453034504-24">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3453034504-25">{</span><span class="ss">:q1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:q3</span><span class="p" data-group-id="3453034504-25">}</span><span class="p" data-group-id="3453034504-21">]</span><span class="p">,</span><span class="w"> </span><span class="ss">:q0</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3453034504-26">[</span><span class="ss">:q3</span><span class="p" data-group-id="3453034504-26">]</span><span class="p" data-group-id="3453034504-19">)</span><span class="w">
+</span><span class="p" data-group-id="3453034504-27">{</span><span class="ss">:not_accepted</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Automata is trapped in a state with no valid transition for the given input.&quot;</span><span class="p" data-group-id="3453034504-27">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">FiniteAutomata</span><span class="o">.</span><span class="n">compose_automata</span><span class="p" data-group-id="3453034504-28">(</span><span class="s">&quot;abc&quot;</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3453034504-29">[</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p" data-group-id="3453034504-29">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3453034504-30">[</span><span class="p" data-group-id="3453034504-31">{</span><span class="ss">:q0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:q1</span><span class="p" data-group-id="3453034504-31">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3453034504-32">{</span><span class="ss">:q1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:q2</span><span class="p" data-group-id="3453034504-32">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3453034504-33">{</span><span class="ss">:q2</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:q1</span><span class="p" data-group-id="3453034504-33">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3453034504-34">{</span><span class="ss">:q1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:q3</span><span class="p" data-group-id="3453034504-34">}</span><span class="p" data-group-id="3453034504-30">]</span><span class="p">,</span><span class="w"> </span><span class="ss">:q0</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3453034504-35">[</span><span class="ss">:q1</span><span class="p" data-group-id="3453034504-35">]</span><span class="p" data-group-id="3453034504-28">)</span><span class="w">
+</span><span class="p" data-group-id="3453034504-36">{</span><span class="ss">:accepted</span><span class="p" data-group-id="3453034504-36">}</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="next_state/3">
+
+  <div class="detail-header">
+    <a href="#next_state/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">next_state(input_chars, current_state, transition_function)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Calculates the next state for the deconstructed input, following the rules of the transition function. </p><p>If no next state can be found, the function returns an :empty atom, that will be evaluated in a :not_accepted return. </p><p>If one or more next states can be found at the end of the recursion, the function returns a list with the next state(s).</p><h2 id="next_state/3-examples" class="section-heading">
+  <a href="#next_state/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Examples
+</h2>
+<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">FiniteAutomata</span><span class="o">.</span><span class="n">next_state</span><span class="p" data-group-id="8917465302-1">(</span><span class="p" data-group-id="8917465302-2">[</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p" data-group-id="8917465302-2">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8917465302-3">[</span><span class="ss">:q0</span><span class="p" data-group-id="8917465302-3">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8917465302-4">[</span><span class="p" data-group-id="8917465302-5">{</span><span class="ss">:q0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:q1</span><span class="p" data-group-id="8917465302-5">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8917465302-6">{</span><span class="ss">:q1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:q2</span><span class="p" data-group-id="8917465302-6">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8917465302-7">{</span><span class="ss">:q2</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:q3</span><span class="p" data-group-id="8917465302-7">}</span><span class="p" data-group-id="8917465302-4">]</span><span class="p" data-group-id="8917465302-1">)</span><span class="w">
+</span><span class="p" data-group-id="8917465302-8">[</span><span class="ss">:q3</span><span class="p" data-group-id="8917465302-8">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">FiniteAutomata</span><span class="o">.</span><span class="n">next_state</span><span class="p" data-group-id="8917465302-9">(</span><span class="p" data-group-id="8917465302-10">[</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p" data-group-id="8917465302-10">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8917465302-11">[</span><span class="ss">:q0</span><span class="p" data-group-id="8917465302-11">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8917465302-12">[</span><span class="p" data-group-id="8917465302-13">{</span><span class="ss">:q0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:q1</span><span class="p" data-group-id="8917465302-13">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8917465302-14">{</span><span class="ss">:q1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:q2</span><span class="p" data-group-id="8917465302-14">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8917465302-15">{</span><span class="ss">:q2</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:q1</span><span class="p" data-group-id="8917465302-15">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8917465302-16">{</span><span class="ss">:q1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:q3</span><span class="p" data-group-id="8917465302-16">}</span><span class="p" data-group-id="8917465302-12">]</span><span class="p" data-group-id="8917465302-9">)</span><span class="w">
+</span><span class="p" data-group-id="8917465302-17">[</span><span class="ss">:q2</span><span class="p">,</span><span class="w"> </span><span class="ss">:q3</span><span class="p" data-group-id="8917465302-17">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">FiniteAutomata</span><span class="o">.</span><span class="n">next_state</span><span class="p" data-group-id="8917465302-18">(</span><span class="p" data-group-id="8917465302-19">[</span><span class="s">&quot;b&quot;</span><span class="p" data-group-id="8917465302-19">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8917465302-20">[</span><span class="ss">:q0</span><span class="p" data-group-id="8917465302-20">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8917465302-21">[</span><span class="p" data-group-id="8917465302-22">{</span><span class="ss">:q0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:q1</span><span class="p" data-group-id="8917465302-22">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8917465302-23">{</span><span class="ss">:q1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:q2</span><span class="p" data-group-id="8917465302-23">}</span><span class="p" data-group-id="8917465302-21">]</span><span class="p" data-group-id="8917465302-18">)</span><span class="w">
+</span><span class="ss">:not_accepted</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="validate_input/2">
+
+  <div class="detail-header">
+    <a href="#validate_input/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">validate_input(input, alphabet)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Validates input according to automata's alphabet.</p><h2 id="validate_input/2-examples" class="section-heading">
+  <a href="#validate_input/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Examples
+</h2>
+<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">FiniteAutomata</span><span class="o">.</span><span class="n">validate_input</span><span class="p" data-group-id="4442562180-1">(</span><span class="s">&quot;abc&quot;</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4442562180-2">[</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p" data-group-id="4442562180-2">]</span><span class="p" data-group-id="4442562180-1">)</span><span class="w">
+</span><span class="ss">:valid</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">FiniteAutomata</span><span class="o">.</span><span class="n">validate_input</span><span class="p" data-group-id="4442562180-3">(</span><span class="s">&quot;abc&quot;</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4442562180-4">[</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;d&quot;</span><span class="p" data-group-id="4442562180-4">]</span><span class="p" data-group-id="4442562180-3">)</span><span class="w">
+</span><span class="ss">:invalid</span></code></pre>
+  </section>
+</section>
+
+          </div>
+        </section>
+
+      <footer class="footer">
+        <p>
+          <span class="line">
+            Built using
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.23.0) for the
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank">Elixir programming language</a>.
+          </span>
+          <span class="line">
+            Designed by
+            <a href="https://twitter.com/dignifiedquire" target="_blank" rel="noopener" title="@dignifiedquire">Friedel Ziegelmayer</a>.
+          </span>
+        </p>
+        <p>
+
+            <a href="api-reference.html" title="API reference" class="line footer-button">API Reference</a>
+
+          <button class="line footer-button display-shortcuts-help">
+            Display keyboard shortcuts
+          </button>
+          <button class="line footer-button night-mode-toggle">
+            Toggle night mode
+          </button>
+          <button class="line footer-button display-quick-switch">
+            Go to a HexDocs package
+          </button>
+          <button class="line footer-button tooltips-toggle">
+            <span class="tooltips-option-disable">Disable tooltips</span>
+            <span class="tooltips-option-enable">Enable tooltips</span>
+          </button>
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+  </body>
+</html>
