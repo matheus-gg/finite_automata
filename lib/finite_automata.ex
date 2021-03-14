@@ -105,19 +105,38 @@ defmodule FiniteAutomata do
       :trapped
     else
       [input | rest] = input_chars
+			current_state = get_next_nil_in_the_chain(current_state, transition_function)
       state_transitions = Enum.filter(transition_function, fn x -> Enum.member?(current_state, elem(x, 0)) end)
       valid_transitions = Enum.filter(state_transitions, fn x -> elem(x, 1) == input or elem(x, 1) == nil end)
+			next_states = Enum.reduce(valid_transitions, [], fn x, acc -> acc ++ [elem(x, 2)] end)
+			next_states_linked_by_nil = get_next_nil_in_the_chain(next_states, transition_function)
+
       case valid_transitions do
         [] -> next_state(input_chars, :empty, transition_function)
-        [{_, _, upcoming_state}] -> case length(rest) do
-          0 -> [upcoming_state]
-          _ -> next_state(rest, [upcoming_state], transition_function)
+        [{_, _, _}] -> case length(rest) do
+          0 -> next_states_linked_by_nil
+          _ -> next_state(rest, next_states_linked_by_nil, transition_function)
         end
         _ -> case length(rest) do
-          0 -> Enum.reduce(valid_transitions, [], fn x, acc -> acc ++ [elem(x, 2)] end)
-          _ -> next_state(rest, Enum.reduce(valid_transitions, [], fn x, acc -> acc ++ [elem(x, 2)] end), transition_function)
+          0 -> next_states_linked_by_nil
+          _ -> next_state(rest, next_states_linked_by_nil, transition_function)
         end
       end
     end
   end
+	
+	def get_next_nil_in_the_chain(initial_states, transition_function) do
+		state_transitions = Enum.filter(transition_function, fn x -> Enum.member?(initial_states, elem(x, 0)) end)
+		valid_transitions = Enum.filter(state_transitions, fn x -> elem(x, 1) == nil end)
+		final_states = Enum.reduce(valid_transitions, [], fn x, acc -> acc ++ [elem(x, 2)] end)
+		final_states = final_states ++ initial_states
+		final_states = Enum.uniq(final_states)
+
+		if initial_states == final_states do
+			final_states
+		else
+			get_next_nil_in_the_chain(final_states, transition_function)
+		end
+	end
+	
 end
