@@ -108,7 +108,7 @@ defmodule FiniteAutomata do
       state_transitions = Enum.filter(transition_function, fn x -> Enum.member?(current_state, elem(x, 0)) end)
       valid_transitions = Enum.filter(state_transitions, fn x -> elem(x, 1) == input or elem(x, 1) == nil end)
       case valid_transitions do
-        [] -> next_state(input, :empty, transition_function)
+        [] -> next_state(input_chars, :empty, transition_function)
         [{_, _, upcoming_state}] -> case length(rest) do
           0 -> [upcoming_state]
           _ -> next_state(rest, [upcoming_state], transition_function)
