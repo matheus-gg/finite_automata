@@ -125,6 +125,23 @@ defmodule FiniteAutomata do
     end
   end
   
+  @doc """
+  Get all states associated with empty transitions(nil) from a initial state
+  
+  ## Parameters
+    - **initial_states**: The first state to check for subsequent states linked with empty transitions. Must be a Enum.
+    - **transition_function**: A list of tuples representing the rules for the transition function. The form o the tuples is `{:q0, "x", :q1}`, representing the initial state, symbol triggering the transition and the next state.
+
+  ## Examples
+
+      iex> FiniteAutomata.get_next_nil_in_the_chain([:q1], [{:q0, "a", :q1}, {:q1, nil, :q3}, {:q1, "b", :q2}])
+      [:q1, :q3]
+
+      iex> FiniteAutomata.get_next_nil_in_the_chain([:q0], [{:q0, "a", :q1}, {:q1, nil, :q3}, {:q1, "b", :q2}, {:q2, "c", :q3}, {:q2, nil, :q0}, {:q3, nil, :q0}, {:q3, nil, :q4}])
+      [:q0, :q4, :q3]
+
+  """
+  
   def get_next_nil_in_the_chain(initial_states, transition_function) do
     state_transitions = Enum.filter(transition_function, fn x -> Enum.member?(initial_states, elem(x, 0)) end)
     valid_transitions = Enum.filter(state_transitions, fn x -> elem(x, 1) == nil end)
@@ -138,5 +155,4 @@ defmodule FiniteAutomata do
       get_next_nil_in_the_chain(final_states, transition_function)
     end
   end
-  
 end
