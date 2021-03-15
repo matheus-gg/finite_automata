@@ -135,9 +135,9 @@ defmodule FiniteAutomata do
   ## Examples
 
       iex> FiniteAutomata.get_next_nil_in_the_chain([:q1], [{:q0, "a", :q1}, {:q1, nil, :q3}, {:q1, "b", :q2}])
-      [:q1, :q3]
+      [:q3, :q1]
 
-      iex> FiniteAutomata.get_next_nil_in_the_chain([:q0], [{:q0, "a", :q1}, {:q1, nil, :q3}, {:q1, "b", :q2}, {:q2, "c", :q3}, {:q2, nil, :q0}, {:q3, nil, :q0}, {:q3, nil, :q4}])
+      iex> FiniteAutomata.get_next_nil_in_the_chain([:q3], [{:q0, "a", :q1}, {:q1, nil, :q3}, {:q1, "b", :q2}, {:q2, "c", :q3}, {:q2, nil, :q0}, {:q3, nil, :q0}, {:q3, nil, :q4}])
       [:q0, :q4, :q3]
 
   """
